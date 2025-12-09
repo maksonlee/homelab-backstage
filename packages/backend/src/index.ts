@@ -38,6 +38,9 @@ backend.add(
   import('@backstage/plugin-catalog-backend-module-scaffolder-entity-model'),
 );
 
+// LDAP org provider: sync Users & Groups from LDAP into the catalog
+backend.add(import('@backstage/plugin-catalog-backend-module-ldap'));
+
 // See https://backstage.io/docs/features/software-catalog/configuration#subscribing-to-catalog-errors
 backend.add(import('@backstage/plugin-catalog-backend-module-logs'));
 
