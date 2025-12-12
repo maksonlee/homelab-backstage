@@ -19,6 +19,15 @@ backend:
     connection:
       directory: /var/lib/backstage/db
 
+jenkins:
+  instances:
+    - name: default
+      baseUrl: https://jenkins.maksonlee.com
+      username: ${JENKINS_USERNAME}
+      apiKey: ${JENKINS_API_TOKEN}
+      projectCountLimit: 250
+      # crumbIssuer: true    # uncomment if your Jenkins requires CSRF crumbs
+
 auth:
   environment: production
   session:
