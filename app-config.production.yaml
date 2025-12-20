@@ -15,9 +15,17 @@ backend:
 
   # config options: https://node-postgres.com/apis/client
   database:
-    client: better-sqlite3
+    client: pg
+
+    # Recommended: one database, per-plugin schemas
+    pluginDivisionMode: schema
+
     connection:
-      directory: /var/lib/backstage/db
+      host: ${POSTGRES_HOST}
+      port: ${POSTGRES_PORT}
+      user: ${POSTGRES_USER}
+      password: ${POSTGRES_PASSWORD}
+      database: ${POSTGRES_DB}
 
 jenkins:
   instances:
