@@ -28,6 +28,7 @@ node_modules/
 
 # dotenv environment variables file
 .env
+.env.k8s
 .env.test
 
 # Build output

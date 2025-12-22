@@ -1,0 +1,84 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: homelab-backstage
+  namespace: backstage
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: homelab-backstage
+  template:
+    metadata:
+      labels:
+        app: homelab-backstage
+    spec:
+      containers:
+        - name: homelab-backstage
+          image: harbor.maksonlee.com/library/homelab-backstage:2025-12-21
+          imagePullPolicy: Always
+          ports:
+            - name: http
+              containerPort: 7007
+
+          # Load env vars (OIDC client for k8s, plus your existing secrets)
+          envFrom:
+            - secretRef:
+                name: backstage-env
+
+          # Mount the minimal k8s override config
+          volumeMounts:
+            - name: k8s-config
+              mountPath: /app/app-config.k8s.yaml
+              subPath: app-config.k8s.yaml
+
+          # Start Backstage with your existing configs + the k8s override
+          command: ['node']
+          args:
+            - 'packages/backend'
+            - '--config'
+            - 'app-config.yaml'
+            - '--config'
+            - 'app-config.production.yaml'
+            - '--config'
+            - 'app-config.k8s.yaml'
+
+      volumes:
+        - name: k8s-config
+          configMap:
+            name: backstage-k8s-config
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: homelab-backstage
+  namespace: backstage
+spec:
+  type: ClusterIP
+  selector:
+    app: homelab-backstage
+  ports:
+    - name: http
+      port: 80
+      targetPort: 7007
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: homelab-backstage
+  namespace: backstage
+spec:
+  ingressClassName: traefik
+  rules:
+    - host: backstage-k8s.maksonlee.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: homelab-backstage
+                port:
+                  number: 80
