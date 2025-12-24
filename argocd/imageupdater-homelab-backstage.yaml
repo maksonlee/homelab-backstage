@@ -1,0 +1,30 @@
+apiVersion: argocd-image-updater.argoproj.io/v1alpha1
+kind: ImageUpdater
+metadata:
+  name: homelab-backstage
+  namespace: argocd
+spec:
+  # Argo CD Applications live here
+  namespace: argocd
+
+  # Application write-back (no Git commits)
+  writeBackConfig:
+    method: argocd
+
+  applicationRefs:
+    - namePattern: "homelab-backstage"
+      images:
+        - alias: backstage
+
+          # Harbor project repo (avoid library/)
+          imageName: harbor.maksonlee.com/backstage/homelab-backstage:2025-12-21
+
+          commonUpdateSettings:
+            # Good for “date tags” + “commit tags”
+            updateStrategy: newest-build
+            allowTags: "regexp:^(\\d{4}-\\d{2}-\\d{2}|[0-9a-f]{7})$"
+
+          # Must match the image identifier used in your manifests (without tag)
+          manifestTargets:
+            kustomize:
+              name: harbor.maksonlee.com/backstage/homelab-backstage
