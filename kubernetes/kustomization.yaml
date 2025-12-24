@@ -1,12 +1,15 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
+namespace: backstage
+
 resources:
   - postgres.yaml
   - homelab-backstage.yaml
 
-# Convert app-config.k8s.yaml into a ConfigMap managed by GitOps.
-# Kustomize will append a hash suffix and update references automatically.
+generatorOptions:
+  disableNameSuffixHash: false
+
 configMapGenerator:
   - name: backstage-k8s-config
     files:
