@@ -5,7 +5,9 @@ metadata:
   description: Homelab Backstage application.
   annotations:
     github.com/project-slug: maksonlee/homelab-backstage
+    jenkins.io/job-full-name: backstage/homelab-backstage-main-ci
     backstage.io/techdocs-ref: dir:.
+
 spec:
   type: website
   owner: user:default/maksonlee
