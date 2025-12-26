@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: homelab-backstage
-          image: harbor.maksonlee.com/backstage/homelab-backstage:2025-12-21
+          image: harbor.maksonlee.com/backstage/homelab-backstage:test
           imagePullPolicy: Always
           ports:
             - name: http
