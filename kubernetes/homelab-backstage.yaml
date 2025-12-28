@@ -13,6 +13,16 @@ spec:
       labels:
         app: homelab-backstage
     spec:
+      initContainers:
+        - name: wait-for-postgres
+          image: postgres:16
+          command: ['sh', '-ec']
+          args:
+            - |
+              until pg_isready -h backstage-postgres -p 5432; do
+                echo "waiting for postgres..."
+                sleep 2
+              done
       containers:
         - name: homelab-backstage
           image: harbor.maksonlee.com/backstage/homelab-backstage:test
