@@ -3,6 +3,9 @@ kind: Service
 metadata:
   name: backstage-postgres
   namespace: backstage
+  labels:
+    app: backstage-postgres
+    backstage.io/kubernetes-id: homelab-backstage
 spec:
   type: ClusterIP
   selector:
@@ -18,6 +21,9 @@ kind: StatefulSet
 metadata:
   name: backstage-postgres
   namespace: backstage
+  labels:
+    app: backstage-postgres
+    backstage.io/kubernetes-id: homelab-backstage
 spec:
   serviceName: backstage-postgres
   replicas: 1
@@ -28,6 +34,7 @@ spec:
     metadata:
       labels:
         app: backstage-postgres
+        backstage.io/kubernetes-id: homelab-backstage
     spec:
       securityContext:
         fsGroup: 999
