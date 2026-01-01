@@ -7,3 +7,16 @@ backend:
   cors:
     origin: https://backstage-k8s.maksonlee.com
     credentials: true
+
+kubernetes:
+  serviceLocatorMethod:
+    type: multiTenant
+
+  clusterLocatorMethods:
+    - type: config
+      clusters:
+        - name: in-cluster
+          url: https://kubernetes.default.svc
+          authProvider: serviceAccount
+          skipTLSVerify: false
+          skipMetricsLookup: false
