@@ -16,6 +16,8 @@ rules:
       - services
       - endpoints
       - configmaps
+      - limitranges
+      - resourcequotas
       - deployments
       - replicasets
       - daemonsets
