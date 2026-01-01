@@ -13,6 +13,7 @@ spec:
       labels:
         app: homelab-backstage
     spec:
+      serviceAccountName: backstage-k8s-reader
       initContainers:
         - name: wait-for-postgres
           image: postgres:16

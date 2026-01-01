@@ -6,6 +6,7 @@ namespace: backstage
 resources:
   - postgres.yaml
   - homelab-backstage.yaml
+  - backstage-k8s-rbac.yaml
 
 generatorOptions:
   disableNameSuffixHash: false
