@@ -159,3 +159,11 @@ proxy:
       secure: true
       headers:
         accept: application/json
+
+argocd:
+  appLocatorMethods:
+    - type: config
+      instances:
+        - name: main
+          url: https://argocd.maksonlee.com
+          token: ${ARGOCD_AUTH_TOKEN}
