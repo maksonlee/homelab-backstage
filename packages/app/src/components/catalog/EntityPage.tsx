@@ -54,6 +54,11 @@ import { ReportIssue } from '@backstage/plugin-techdocs-module-addons-contrib';
 import { EntityKubernetesContent, isKubernetesAvailable } from '@backstage/plugin-kubernetes';
 
 import { EntityJenkinsContent, isJenkinsAvailable } from '@backstage-community/plugin-jenkins';
+import {
+  EntityArgoCDOverviewCard,
+  EntityArgoCDHistoryCard,
+  isArgocdAvailable,
+} from '@roadiehq/backstage-plugin-argo-cd';
 
 import { EntityArtifactoryBrowserContent } from '@internal/backstage-plugin-artifactory-browser';
 import { EntityHarborArtifactsTab } from '@internal/backstage-plugin-harbor';
@@ -73,28 +78,45 @@ const techdocsContent = (
 );
 
 const cicdContent = (
-  <EntitySwitch>
-    <EntitySwitch.Case if={isJenkinsAvailable}>
-      <EntityJenkinsContent />
-    </EntitySwitch.Case>
+  <Grid container spacing={3} alignItems="stretch">
+    {/* Jenkins (existing CI view) */}
+    <Grid item xs={12}>
+      <EntitySwitch>
+        <EntitySwitch.Case if={isJenkinsAvailable}>
+          <EntityJenkinsContent />
+        </EntitySwitch.Case>
 
-    <EntitySwitch.Case>
-      <EmptyState
-        title="No CI/CD available for this entity"
-        missing="info"
-        description="To enable CI/CD for this component, configure a Jenkins job and add the jenkins.io/job-full-name annotation to its catalog-info.yaml. You can read more about annotations in Backstage by clicking the button below."
-        action={
-          <Button
-            variant="contained"
-            color="primary"
-            href="https://backstage.io/docs/features/software-catalog/well-known-annotations"
-          >
-            Read more
-          </Button>
-        }
-      />
-    </EntitySwitch.Case>
-  </EntitySwitch>
+        <EntitySwitch.Case>
+          <EmptyState
+            title="No CI/CD available for this entity"
+            missing="info"
+            description="To enable CI/CD for this component, configure a Jenkins job and add the jenkins.io/job-full-name annotation to its catalog-info.yaml. You can read more about annotations in Backstage by clicking the button below."
+            action={
+              <Button
+                variant="contained"
+                color="primary"
+                href="https://backstage.io/docs/features/software-catalog/well-known-annotations"
+              >
+                Read more
+              </Button>
+            }
+          />
+        </EntitySwitch.Case>
+      </EntitySwitch>
+    </Grid>
+
+    {/* Argo CD (GitOps / CD view) */}
+    <EntitySwitch>
+      <EntitySwitch.Case if={isArgocdAvailable}>
+        <Grid item xs={12} md={4}>
+          <EntityArgoCDOverviewCard />
+        </Grid>
+        <Grid item xs={12} md={8}>
+          <EntityArgoCDHistoryCard />
+        </Grid>
+      </EntitySwitch.Case>
+    </EntitySwitch>
+  </Grid>
 );
 
 const entityWarningContent = (
