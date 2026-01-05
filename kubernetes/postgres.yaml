@@ -48,20 +48,14 @@ spec:
 
           env:
             - name: POSTGRES_USER
-              valueFrom:
-                secretKeyRef:
-                  name: backstage-env
-                  key: POSTGRES_USER
+              value: backstage
+            - name: POSTGRES_DB
+              value: backstage
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: backstage-env
                   key: POSTGRES_PASSWORD
-            - name: POSTGRES_DB
-              valueFrom:
-                secretKeyRef:
-                  name: backstage-env
-                  key: POSTGRES_DB
             - name: PGDATA
               value: /var/lib/postgresql/data/pgdata
 

@@ -8,6 +8,16 @@ backend:
     origin: https://backstage-k8s.maksonlee.com
     credentials: true
 
+  database:
+    connection:
+      host: backstage-postgres
+
+auth:
+  providers:
+    oidc:
+      production:
+        clientId: backstage-k8s
+
 kubernetes:
   serviceLocatorMethod:
     type: multiTenant

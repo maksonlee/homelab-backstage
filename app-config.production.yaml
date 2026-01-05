@@ -24,17 +24,17 @@ backend:
     pluginDivisionMode: schema
 
     connection:
-      host: ${POSTGRES_HOST}
-      port: ${POSTGRES_PORT}
-      user: ${POSTGRES_USER}
+      host: backstage.maksonlee.com
+      port: 5432
+      user: backstage
       password: ${POSTGRES_PASSWORD}
-      database: ${POSTGRES_DB}
+      database: backstage
 
 jenkins:
   instances:
     - name: default
       baseUrl: https://jenkins.maksonlee.com
-      username: ${JENKINS_USERNAME}
+      username: backstage
       apiKey: ${JENKINS_API_TOKEN}
       projectCountLimit: 250
       # crumbIssuer: true    # uncomment if your Jenkins requires CSRF crumbs
@@ -47,7 +47,7 @@ auth:
     oidc:
       production:
         metadataUrl: https://keycloak.maksonlee.com/realms/maksonlee.com/.well-known/openid-configuration
-        clientId: ${AUTH_OIDC_CLIENT_ID}
+        clientId: backstage
         clientSecret: ${AUTH_OIDC_CLIENT_SECRET}
         additionalScopes:
           - profile
@@ -70,7 +70,7 @@ integrations:
       gitilesBaseUrl: https://gerrit.maksonlee.com/plugins/gitiles
 
       # Backstage calls this "password", but you should put your token here
-      username: ${GERRIT_USERNAME}
+      username: backstage
       password: ${GERRIT_TOKEN}
 
 catalog:
