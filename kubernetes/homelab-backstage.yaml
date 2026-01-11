@@ -37,6 +37,9 @@ spec:
           ports:
             - name: http
               containerPort: 7007
+            - name: metrics
+              containerPort: 9464
+
           envFrom:
             - secretRef:
                 name: backstage-env
@@ -48,8 +51,11 @@ spec:
               subPath: app-config.k8s.yaml
 
           # Start Backstage with your existing configs + the k8s override
+          # IMPORTANT: add --require ./instrumentation.js because this YAML overrides Dockerfile CMD.
           command: ['node']
           args:
+            - '--require'
+            - './instrumentation.js'
             - 'packages/backend'
             - '--config'
             - 'app-config.yaml'
@@ -80,6 +86,9 @@ spec:
     - name: http
       port: 80
       targetPort: 7007
+    - name: metrics
+      port: 9464
+      targetPort: 9464
 
 ---
 apiVersion: networking.k8s.io/v1

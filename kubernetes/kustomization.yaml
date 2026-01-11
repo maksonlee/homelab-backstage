@@ -10,6 +10,7 @@ resources:
   - eso-vault-sa.yaml
   - secretstore-vault-backstage.yaml
   - externalsecret-backstage-env.yaml
+  - backstage-servicemonitor.yaml
 
 generatorOptions:
   disableNameSuffixHash: false
